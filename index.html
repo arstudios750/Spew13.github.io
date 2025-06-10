@@ -40,7 +40,7 @@
     .game-box p {
       font-size: 20px;
       font-weight: bold;
-      margin: 10px 0;
+      margin: 20px 0;
     }
 
     button {
@@ -135,10 +135,13 @@
   </style>
 </head>
 <body>
-
-  <header>Spew 13 - Green Iguana Studios</header>
-  <div class="spew-clock" id="clock">00:00:00 AM</div>
-  <div class="container">
+      <!-- Main Spew13 Content -->
+  <div id="spew13Main">
+    <header>Spew 13 - Green Iguana Studios</header>
+    <div class="spew-clock" id="clock">00:00:00 AM</div>
+ <!-- Starts Games -->
+      <div id="spew13Main">
+    <div class="container">
     <!-- Game boxes -->
     <div class="game-box">
       <p>Backflip Dive 3D</p>
@@ -214,7 +217,7 @@
 
     <!-- Eaglercraft Minecraft -->
     <div class="game-box">
-      <p>Eaglercraft Minecraft</p>
+      <p>Minecraft</p>
       <button onclick="toggleEagler(false, this)">Click to Load</button>
       <button onclick="toggleEagler(true, this)">Fullscreen</button>
       <div class="iframe-container" id="eagler-container"></div>
@@ -266,13 +269,42 @@
   <div class="iframe-container"></div>
 </div>
 
+      <!-- Stickman Hook -->
+<div class="game-box" id="custom-stickman-hook">
+  <p>Stickman Hook</p>
+  <button onclick="toggleCustomIframe(this, 'custom-stickman-hook', 'https://1games.io/stickman-hook')">Click to Load</button>
+  <div class="iframe-container"></div>
+</div>
+
+      <!-- Tunnel Rush -->
+<div class="game-box" id="custom-tunnel-rush">
+  <p>Tunnel Rush</p>
+  <button onclick="toggleCustomIframe(this, 'custom-tunnel-rush', 'https://1games.io/tunnel-rush')">Click to Load</button>
+  <div class="iframe-container"></div>
+</div>
+
+
+      <!-- 1v1.LOL -->
+<div class="game-box" id="custom-1v1lol">
+  <p>1v1.LOL</p>
+  <button onclick="toggleCustomIframe(this, 'custom-1v1lol', 'https://1games.io/1v1-lol')">Click to Load</button>
+  <div class="iframe-container"></div>
+</div>
+
+      
 <!-- Vectaria.io -->
 <div class="game-box" id="custom-vectaria">
   <p>Vectaria.io</p>
   <button onclick="toggleCustomIframe(this, 'custom-vectaria', 'https://1games.io/vectaria')">Click to Load</button>
   <div class="iframe-container"></div>
 </div>
-
+      
+<!-- Duck Life -->
+<div class="game-box" id="custom-duck-life">
+  <p>Duck Life</p>
+  <button onclick="toggleCustomIframe(this, 'custom-duck-life', 'https://1games.io/duck-life')">Click to Load</button>
+  <div class="iframe-container"></div>
+</div>
 
 
 <!-- Getting Over It -->
@@ -289,13 +321,122 @@
   <div class="iframe-container"></div>
 </div>
 
+  <!-- Crazy Cattle 3D -->
+<div class="game-box" id="grow-a-garden">
+  <p>Grow A Garden</p>
+  <button onclick="toggleCustomIframe(this, 'grow-a-garden', 'https://1games.io/grow-a-garden')">Click to Load</button>
+  <div class="iframe-container"></div>
+</div>
+            
       <!-- Crazy Cattle 3D -->
 <div class="game-box" id="custom-crazy-cattle">
   <p>Crazy Cattle 3D</p>
   <button onclick="toggleCustomIframe(this, 'custom-crazy-cattle', 'https://1games.io/crazy-cattle-3d')">Click to Load</button>
   <div class="iframe-container"></div>
 </div>
+</div>
+</div>
+       <!-- All Gallery code Start-->
+<!-- Gallery Walk Button -->
+<div id="galleryButtonWrapper" style="text-align: center; margin-top: 30px;">
+  <button onclick="loadGalleryWalk()" style="
+    padding: 14px 28px;
+    background: linear-gradient(90deg, limegreen, #00ff88);
+    border: none;
+    border-radius: 16px;
+    font-size: 1.4em;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+    box-shadow: 0 0 20px limegreen;
+    transition: transform 0.2s ease;
+  " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    Enter Spew13 Gallery Walk
+  </button>
+</div>
 
+<!-- Gallery Walk Section -->
+<div id="galleryWalk" style="margin-top: 40px; text-align: center; padding: 20px;">
+  <h1 style="
+    color: lime;
+    font-size: 3em;
+    text-shadow: 0 0 15px limegreen;
+    margin-bottom: 30px;
+  ">
+    Spew13 Gallery Walk
+  </h1>
+
+  <div style="
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: auto;
+  ">
+    <div class="gallery-card">
+      <img src="https://via.placeholder.com/220x150?text=Gallery+1">
+    </div>
+    <div class="gallery-card">
+      <img src="https://via.placeholder.com/220x150?text=Gallery+2">
+    </div>
+    <div class="gallery-card">
+      <img src="https://via.placeholder.com/220x150?text=Gallery+3">
+    </div>
+  </div>
+
+  <p style="color: #bbb; margin-top: 25px;">🌱 More coming soon...</p>
+</div>
+
+      <style>
+  #galleryWalk {
+    display: none;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .gallery-card {
+    background-color: rgba(30, 30, 30, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 0 25px limegreen;
+    overflow: hidden;
+    padding: 12px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: cardPop 0.5s ease forwards;
+  }
+
+  .gallery-card:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 35px #00ff88;
+  }
+
+  .gallery-card img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+  }
+
+  @keyframes cardPop {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Delay cards popping in */
+  .gallery-card:nth-child(1) { animation-delay: 0.2s; }
+  .gallery-card:nth-child(2) { animation-delay: 0.4s; }
+  .gallery-card:nth-child(3) { animation-delay: 0.6s; }
+</style>
+
+</body>
+      <!-- All Gallery code End-->
+      
   <script>
     function toggleGame(path, button) {
       const container = document.getElementById(path);
@@ -385,6 +526,7 @@
   }
 }
   // End custom Button Iframe Loader
+    
   </script>
       
 <footer style="
@@ -423,7 +565,7 @@
 }
 
 .game-box .iframe-container {
-  margin-top: 15px;
+  margin-top: 20px;
   width: 100%; /* full width of game-box */
 }
 
@@ -437,5 +579,6 @@
 }
 
 </style>
+     
 </body>
 </html>
