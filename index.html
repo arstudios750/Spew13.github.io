@@ -120,7 +120,7 @@
 
     .spew-clock {
       position: center;
-      top: 80px;
+      top: 80px; /* adjust depending on your header height */
       font-size: 1.5rem;
       background-color: #222;
       color: lime;
@@ -131,6 +131,8 @@
       z-index: 1000;
       font-color: lime;
     }
+
+    /* Your existing styles for container, game-box etc. (unchanged) */
 
     #nowPlayingBox {
       position: fixed;
@@ -145,163 +147,181 @@
       box-shadow: 0 0 12px limegreen;
       z-index: 9999;
       font-family: Arial, sans-serif;
+      user-select: none;
     }
   </style>
 </head>
 <body>
- <!-- Start Music Button and Audio Playlist -->
-<div style="margin-top: 20px;">
-  <button onclick="startMusic()">🎵 Start Music</button>
 
-  <audio id="song1" src="Tech House Future.mp3"></audio>
-  <audio id="song2" src="Addicted.mp3"></audio>
-  <audio id="song3" src="BloodSimple.mp3"></audio>
-</div>
+  <!-- Start Music Button and Audio Playlist -->
+  <div style="margin-top: 20px;">
+    <button onclick="startMusic()">🎵 Start Music</button>
 
-<!-- Now Playing Display -->
-<div id="nowPlayingBox">
-  🎶 Now Playing: Nothing
-</div>
+    <audio id="song1" src="Tech House Future.mp3"></audio>
+    <audio id="song2" src="Addicted.mp3"></audio>
+    <audio id="song3" src="BloodSimple.mp3"></audio>
+  </div>
 
-<!-- Main Spew13 Content -->
-<div id="spew13Main">
-  <header>Spew 13 - Green Iguana Studios</header>
-  <div class="spew-clock" id="clock">00:00:00 AM</div>
-  <!-- Games container here -->
-  <!-- Your existing game boxes go here -->
-</div>
+  <!-- Now Playing Display -->
+  <div id="nowPlayingBox">
+    🎶 Now Playing: Nothing
+  </div>
 
-<script>
-  function toggleGame(path, button) {
-    const container = document.getElementById(path);
-    const loaded = container.querySelector('iframe');
+  <!-- Main Spew13 Content -->
+  <div id="spew13Main">
+    <header>Spew 13 - Green Iguana Studios</header>
+    <div class="spew-clock" id="clock">00:00:00 AM</div>
 
-    if (loaded) {
-      container.innerHTML = '';
-      button.textContent = "Click to Load";
-    } else {
-      const iframe = document.createElement('iframe');
-      iframe.src = `https://spew45.github.io/game-assets/${path}/`;
-      container.appendChild(iframe);
-      button.textContent = "Click to Unload";
-    }
-  }
+    <!-- Your entire original game boxes and gallery code comes here exactly as you posted -->
 
-  function toggleEagler(fullscreen, button) {
-    const container = document.getElementById('eagler-container');
-    const loaded = container.querySelector('iframe');
+    <div class="container">
+      <!-- All your game boxes here, unchanged -->
+      <!-- Example snippet from your original -->
+      <div class="game-box">
+        <p>Backflip Dive 3D</p>
+        <button onclick="toggleGame('backflip-dive-3d', this)">Click to Load</button>
+        <div class="iframe-container" id="backflip-dive-3d"></div>
+      </div>
 
-    if (loaded && !fullscreen) {
-      container.innerHTML = '';
-      button.textContent = "Click to Load";
-    } else if (loaded && fullscreen) {
-      container.classList.add('fullscreen');
-      container.innerHTML = `
-        <button class="exit-fullscreen" onclick="exitFullscreen()">Exit Fullscreen</button>
-        <iframe src="https://eaglercraft.com/mc/1.8.8/" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
-      `;
-    } else {
-      container.innerHTML = `
-        <iframe src="https://eaglercraft.com/mc/1.8.8/" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
-      `;
-      button.textContent = "Click to Unload";
-      container.classList.remove('fullscreen');
-    }
-  }
+      <!-- ... rest of the game boxes, gallery, footer, etc. unchanged ... -->
+    </div>
 
-  function exitFullscreen() {
-    const container = document.getElementById('eagler-container');
-    container.classList.remove('fullscreen');
-    container.innerHTML = '';
-    const loadBtn = container.parentElement.querySelector('button[onclick^="toggleEagler(false"]');
-    if (loadBtn) loadBtn.textContent = "Click to Load";
-  }
+    <!-- Paste your entire original game box and gallery markup exactly here -->
+    <!-- (For brevity I'm not repeating all, just place your original code here) -->
+  </div>
 
-  function updateClock() {
-    const now = new Date();
-    let hours = now.getHours();
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
+  <script>
+    // Your original JS functions exactly as is, no changes
+    function toggleGame(path, button) {
+      const container = document.getElementById(path);
+      const loaded = container.querySelector('iframe');
 
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    const timeString = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
-
-    document.getElementById('clock').textContent = timeString;
-  }
-
-  setInterval(updateClock, 1000);
-  updateClock();
-
-  function toggleCustomIframe(button, boxId, url) {
-    const box = document.getElementById(boxId);
-    const iframeContainer = box.querySelector('.iframe-container');
-    const loadedIframe = iframeContainer.querySelector('iframe');
-
-    if (loadedIframe) {
-      iframeContainer.innerHTML = '';
-      button.textContent = "Click to Load";
-    } else {
-      const iframe = document.createElement('iframe');
-      iframe.src = url;
-      iframe.allowFullscreen = true;
-      iframeContainer.appendChild(iframe);
-      button.textContent = "Click to Unload";
-      box.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-
-  // Music playlist with now playing update
-  function startMusic() {
-    const songs = [
-      { id: "song1", name: "Tech House Future" },
-      { id: "song2", name: "Addicted" },
-      { id: "song3", name: "BloodSimple" }
-    ];
-
-    let currentIndex = 0;
-    const nowPlaying = document.getElementById("nowPlayingBox");
-
-    function playSong(index) {
-      if (index >= songs.length) {
-        nowPlaying.textContent = "🎶 Now Playing: Nothing";
-        return;
+      if (loaded) {
+        container.innerHTML = '';
+        button.textContent = "Click to Load";
+      } else {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://spew45.github.io/game-assets/${path}/`;
+        container.appendChild(iframe);
+        button.textContent = "Click to Unload";
       }
-      // Pause all songs
-      songs.forEach(s => {
-        const audio = document.getElementById(s.id);
-        audio.pause();
-        audio.currentTime = 0;
-      });
-
-      const currentSong = songs[index];
-      const audioElem = document.getElementById(currentSong.id);
-      nowPlaying.textContent = `🎶 Now Playing: ${currentSong.name}`;
-      audioElem.play();
-
-      audioElem.onended = () => {
-        currentIndex++;
-        playSong(currentIndex);
-      };
     }
 
-    playSong(currentIndex);
-  }
-</script>
+    function toggleEagler(fullscreen, button) {
+      const container = document.getElementById('eagler-container');
+      const loaded = container.querySelector('iframe');
 
-<footer style="
-  background-color: #1e1e1e;
-  color: limegreen;
-  text-align: center;
-  padding: 12px 0;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  border-top: 3px solid limegreen;
-  font-size: 18px;
-  user-select: none;
-">
-  &copy; Green Iguana Studios
-</footer>
+      if (loaded && !fullscreen) {
+        container.innerHTML = '';
+        button.textContent = "Click to Load";
+      } else if (loaded && fullscreen) {
+        container.classList.add('fullscreen');
+        container.innerHTML = `
+          <button class="exit-fullscreen" onclick="exitFullscreen()">Exit Fullscreen</button>
+          <iframe src="https://eaglercraft.com/mc/1.8.8/" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
+        `;
+      } else {
+        container.innerHTML = `
+          <iframe src="https://eaglercraft.com/mc/1.8.8/" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
+        `;
+        button.textContent = "Click to Unload";
+        container.classList.remove('fullscreen');
+      }
+    }
+
+    function exitFullscreen() {
+      const container = document.getElementById('eagler-container');
+      container.classList.remove('fullscreen');
+      container.innerHTML = '';
+      const loadBtn = container.parentElement.querySelector('button[onclick^="toggleEagler(false"]');
+      if (loadBtn) loadBtn.textContent = "Click to Load";
+    }
+
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+
+      hours = hours % 12;
+      hours = hours ? hours : 12; // '0' should be '12'
+      const timeString = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+
+      document.getElementById('clock').textContent = timeString;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function toggleCustomIframe(button, boxId, url) {
+      const box = document.getElementById(boxId);
+      const iframeContainer = box.querySelector('.iframe-container');
+      const loadedIframe = iframeContainer.querySelector('iframe');
+
+      if (loadedIframe) {
+        iframeContainer.innerHTML = '';
+        button.textContent = "Click to Load";
+      } else {
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.allowFullscreen = true;
+        iframeContainer.appendChild(iframe);
+        button.textContent = "Click to Unload";
+        box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // UPDATED Music playlist function with Now Playing box update
+    function startMusic() {
+      const songs = [
+        { id: "song1", name: "Tech House Future" },
+        { id: "song2", name: "Addicted" },
+        { id: "song3", name: "BloodSimple" }
+      ];
+
+      let currentIndex = 0;
+      const nowPlaying = document.getElementById("nowPlayingBox");
+
+      function playSong(index) {
+        if (index >= songs.length) {
+          nowPlaying.textContent = "🎶 Now Playing: Nothing";
+          return;
+        }
+        // Pause all songs and reset time
+        songs.forEach(s => {
+          const audio = document.getElementById(s.id);
+          audio.pause();
+          audio.currentTime = 0;
+        });
+
+        const currentSong = songs[index];
+        const audioElem = document.getElementById(currentSong.id);
+        nowPlaying.textContent = `🎶 Now Playing: ${currentSong.name}`;
+        audioElem.play();
+
+        audioElem.onended = () => {
+          currentIndex++;
+          playSong(currentIndex);
+        };
+      }
+
+      playSong(currentIndex);
+    }
+  </script>
+
+  <footer style="
+    background-color: #1e1e1e;
+    color: limegreen;
+    text-align: center;
+    padding: 12px 0;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    border-top: 3px solid limegreen;
+    font-size: 18px;
+    user-select: none;
+  ">
+    &copy; Green Iguana Studios
+  </footer>
 </body>
 </html>
