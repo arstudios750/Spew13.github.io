@@ -190,125 +190,128 @@
     <!-- (For brevity I'm not repeating all, just place your original code here) -->
   </div>
 
-  <script>
-    // Your original JS functions exactly as is, no changes
-    function toggleGame(path, button) {
-      const container = document.getElementById(path);
-      const loaded = container.querySelector('iframe');
+<script>
+function toggleGame(path, button) {
+  const container = document.getElementById(path);
+  const loaded = container.querySelector('iframe');
 
-      if (loaded) {
-        container.innerHTML = '';
-        button.textContent = "Click to Load";
-      } else {
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://spew45.github.io/game-assets/${path}/`;
-        container.appendChild(iframe);
-        button.textContent = "Click to Unload";
-      }
+  if (loaded) {
+    container.innerHTML = '';
+    button.textContent = "Click to Load";
+  } else {
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://spew45.github.io/game-assets/${path}/`;
+    iframe.allowFullscreen = true;
+    container.appendChild(iframe);
+    button.textContent = "Click to Unload";
+  }
+}
+
+function toggleEagler(fullscreen, button) {
+  const container = document.getElementById('eagler-container');
+  const loaded = container.querySelector('iframe');
+
+  if (loaded && !fullscreen) {
+    container.innerHTML = '';
+    button.textContent = "Click to Load";
+  } else if (loaded && fullscreen) {
+    container.classList.add('fullscreen');
+    container.innerHTML = `
+      <button class="exit-fullscreen" onclick="exitFullscreen()">Exit Fullscreen</button>
+      <iframe src="https://eaglercraft.com/mc/1.8.8/" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
+    `;
+  } else {
+    container.innerHTML = `
+      <iframe src="https://eaglercraft.com/mc/1.8.8/" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
+    `;
+    button.textContent = "Click to Unload";
+    container.classList.remove('fullscreen');
+  }
+}
+
+function exitFullscreen() {
+  const container = document.getElementById('eagler-container');
+  container.classList.remove('fullscreen');
+  container.innerHTML = '';
+  const loadBtn = container.parentElement.querySelector('button[onclick^="toggleEagler(false"]');
+  if (loadBtn) loadBtn.textContent = "Click to Load";
+}
+
+function updateClock() {
+  const now = new Date();
+  let hours = now.getHours();
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+
+  hours = hours % 12 || 12;
+  const timeString = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+  document.getElementById('clock').textContent = timeString;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+function toggleCustomIframe(button, boxId, url) {
+  const box = document.getElementById(boxId);
+  const iframeContainer = box.querySelector('.iframe-container');
+  const loadedIframe = iframeContainer.querySelector('iframe');
+
+  if (loadedIframe) {
+    iframeContainer.innerHTML = '';
+    button.textContent = "Click to Load";
+  } else {
+    const iframe = document.createElement('iframe');
+    iframe.src = url;
+    iframe.allowFullscreen = true;
+    iframeContainer.appendChild(iframe);
+    button.textContent = "Click to Unload";
+    box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// MUSIC SYSTEM
+function startMusic() {
+  const nowPlaying = document.getElementById("nowPlayingBox");
+  const songs = [
+    { id: "song1", title: "Tech House Future" },
+    { id: "song2", title: "Addicted" },
+    { id: "song3", title: "BloodSimple" },
+  ];
+
+  let index = 0;
+
+  function playNextSong() {
+    if (index >= songs.length) {
+      nowPlaying.textContent = "🎶 Now Playing: Nothing";
+      return;
     }
 
-    function toggleEagler(fullscreen, button) {
-      const container = document.getElementById('eagler-container');
-      const loaded = container.querySelector('iframe');
+    const { id, title } = songs[index];
+    const audio = document.getElementById(id);
 
-      if (loaded && !fullscreen) {
-        container.innerHTML = '';
-        button.textContent = "Click to Load";
-      } else if (loaded && fullscreen) {
-        container.classList.add('fullscreen');
-        container.innerHTML = `
-          <button class="exit-fullscreen" onclick="exitFullscreen()">Exit Fullscreen</button>
-          <iframe src="https://eaglercraft.com/mc/1.8.8/" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
-        `;
-      } else {
-        container.innerHTML = `
-          <iframe src="https://eaglercraft.com/mc/1.8.8/" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
-        `;
-        button.textContent = "Click to Unload";
-        container.classList.remove('fullscreen');
-      }
-    }
+    nowPlaying.textContent = `🎶 Now Playing: ${title}`;
+    audio.currentTime = 0;
+    audio.play();
 
-    function exitFullscreen() {
-      const container = document.getElementById('eagler-container');
-      container.classList.remove('fullscreen');
-      container.innerHTML = '';
-      const loadBtn = container.parentElement.querySelector('button[onclick^="toggleEagler(false"]');
-      if (loadBtn) loadBtn.textContent = "Click to Load";
-    }
+    audio.onended = () => {
+      index++;
+      playNextSong();
+    };
+  }
 
-    function updateClock() {
-      const now = new Date();
-      let hours = now.getHours();
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      const ampm = hours >= 12 ? 'PM' : 'AM';
+  // Stop all songs before starting
+  songs.forEach(song => {
+    const audio = document.getElementById(song.id);
+    audio.pause();
+    audio.currentTime = 0;
+    audio.onended = null;
+  });
 
-      hours = hours % 12;
-      hours = hours ? hours : 12; // '0' should be '12'
-      const timeString = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+  index = 0;
+  playNextSong();
+}
+</script>
 
-      document.getElementById('clock').textContent = timeString;
-    }
-
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    function toggleCustomIframe(button, boxId, url) {
-      const box = document.getElementById(boxId);
-      const iframeContainer = box.querySelector('.iframe-container');
-      const loadedIframe = iframeContainer.querySelector('iframe');
-
-      if (loadedIframe) {
-        iframeContainer.innerHTML = '';
-        button.textContent = "Click to Load";
-      } else {
-        const iframe = document.createElement('iframe');
-        iframe.src = url;
-        iframe.allowFullscreen = true;
-        iframeContainer.appendChild(iframe);
-        button.textContent = "Click to Unload";
-        box.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
-
-    // UPDATED Music playlist function with Now Playing box update
-    function startMusic() {
-      const songs = [
-        { id: "song1", name: "Tech House Future" },
-        { id: "song2", name: "Addicted" },
-        { id: "song3", name: "BloodSimple" }
-      ];
-
-      let currentIndex = 0;
-      const nowPlaying = document.getElementById("nowPlayingBox");
-
-      function playSong(index) {
-        if (index >= songs.length) {
-          nowPlaying.textContent = "🎶 Now Playing: Nothing";
-          return;
-        }
-        // Pause all songs and reset time
-        songs.forEach(s => {
-          const audio = document.getElementById(s.id);
-          audio.pause();
-          audio.currentTime = 0;
-        });
-
-        const currentSong = songs[index];
-        const audioElem = document.getElementById(currentSong.id);
-        nowPlaying.textContent = `🎶 Now Playing: ${currentSong.name}`;
-        audioElem.play();
-
-        audioElem.onended = () => {
-          currentIndex++;
-          playSong(currentIndex);
-        };
-      }
-
-      playSong(currentIndex);
-    }
-  </script>
 
   <footer style="
     background-color: #1e1e1e;
