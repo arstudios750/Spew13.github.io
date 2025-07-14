@@ -143,6 +143,11 @@
   <audio id="song2" src="Addicted.mp3"></audio> <!-- Replace with real song -->
   <audio id="song3" src="BloodSimple.mp3"></audio> <!-- Replace with real song -->
 </div>
+  <!-- Now Playing Display -->
+<div id="nowPlayingBox">
+  🎶 Now Playing: Nothing
+</div>
+
 
  
       <!-- Main Spew13 Content -->
@@ -548,15 +553,23 @@ function startMusic() {
   const song1 = document.getElementById("song1");
   const song2 = document.getElementById("song2");
   const song3 = document.getElementById("song3");
+  const nowPlaying = document.getElementById("nowPlayingBox");
 
+  nowPlaying.textContent = "🎶 Now Playing: Tech House Future";
   song1.play();
 
   song1.addEventListener("ended", () => {
+    nowPlaying.textContent = "🎶 Now Playing: Song 2";
     song2.play();
   });
 
   song2.addEventListener("ended", () => {
+    nowPlaying.textContent = "🎶 Now Playing: Song 3";
     song3.play();
+  });
+
+  song3.addEventListener("ended", () => {
+    nowPlaying.textContent = "🎶 Now Playing: Nothing";
   });
 }
 
@@ -610,6 +623,21 @@ function startMusic() {
   box-shadow: 0 0 10px limegreen;
   display: block; /* remove inline spacing */
 }
+  #nowPlayingBox {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #1e1e1e;
+  color: limegreen;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 0 12px limegreen;
+  z-index: 9999;
+  font-family: Arial, sans-serif;
+}
+
 
 </style>
      
