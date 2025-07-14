@@ -118,9 +118,9 @@
       cursor: pointer;
     }
 
-        .spew-clock {
+    .spew-clock {
       position: center;
-      top: 80px; /* adjust depending on your header height */
+      top: 80px;
       font-size: 1.5rem;
       background-color: #222;
       color: lime;
@@ -130,8 +130,22 @@
       box-shadow: 0 0 12px lime;
       z-index: 1000;
       font-color: lime;
-}
+    }
 
+    #nowPlayingBox {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #1e1e1e;
+      color: limegreen;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 0 12px limegreen;
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+    }
   </style>
 </head>
 <body>
@@ -140,441 +154,142 @@
   <button onclick="startMusic()">🎵 Start Music</button>
 
   <audio id="song1" src="Tech House Future.mp3"></audio>
-  <audio id="song2" src="Addicted.mp3"></audio> <!-- Replace with real song -->
-  <audio id="song3" src="BloodSimple.mp3"></audio> <!-- Replace with real song -->
+  <audio id="song2" src="Addicted.mp3"></audio>
+  <audio id="song3" src="BloodSimple.mp3"></audio>
 </div>
-  <!-- Now Playing Display -->
+
+<!-- Now Playing Display -->
 <div id="nowPlayingBox">
   🎶 Now Playing: Nothing
 </div>
 
-
- 
-      <!-- Main Spew13 Content -->
-  <div id="spew13Main">
-    <header>Spew 13 - Green Iguana Studios</header>
-    <div class="spew-clock" id="clock">00:00:00 AM</div>
- <!-- Starts Games -->
-      <div id="spew13Main">
-    <div class="container">
-    <!-- Game boxes -->
-    <div class="game-box">
-      <p>Backflip Dive 3D</p>
-      <button onclick="toggleGame('backflip-dive-3d', this)">Click to Load</button>
-      <div class="iframe-container" id="backflip-dive-3d"></div>
-    </div>
-
-    <div class="game-box">
-      <p>Slope</p>
-      <button onclick="toggleGame('slope', this)">Click to Load</button>
-      <div class="iframe-container" id="slope"></div>
-    </div>
-
-          <!-- Slope 2 -->
-<div class="game-box" id="custom-slope-2">
-  <p>Slope 2</p>
-  <button onclick="toggleCustomIframe(this, 'custom-slope-2', 'https://1games.io/slope-2')">Click to Load</button>
-  <div class="iframe-container"></div>
+<!-- Main Spew13 Content -->
+<div id="spew13Main">
+  <header>Spew 13 - Green Iguana Studios</header>
+  <div class="spew-clock" id="clock">00:00:00 AM</div>
+  <!-- Games container here -->
+  <!-- Your existing game boxes go here -->
 </div>
 
+<script>
+  function toggleGame(path, button) {
+    const container = document.getElementById(path);
+    const loaded = container.querySelector('iframe');
 
-<!-- Gimme the Airpod -->
-<div class="game-box" id="custom-gimme-the-airpod">
-  <p>Gimme the Airpod</p>
-  <button onclick="toggleCustomIframe(this, 'custom-gimme-the-airpod', 'https://adfree3kh0.github.io/projects/gimme-the-airpod/index.html')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-        
-    <div class="game-box">
-      <p>2048</p>
-      <button onclick="toggleGame('2048', this)">Click to Load</button>
-      <div class="iframe-container" id="2048"></div>
-    </div>
-
-    <div class="game-box">
-      <p>Subway Surfers</p>
-      <button onclick="toggleGame('subway-surfers', this)">Click to Load</button>
-      <div class="iframe-container" id="subway-surfers"></div>
-    </div>
-
-    <div class="game-box">
-      <p>Retro Bowl</p>
-      <button onclick="toggleGame('retro-bowl', this)">Click to Load</button>
-      <div class="iframe-container" id="retro-bowl"></div>
-    </div>
-
-      <!-- Slope 2 -->
-<div class="game-box" id="ragdoll-hit-stickman">
-  <p>Stickman Hit</p>
-  <button onclick="toggleCustomIframe(this, 'ragdoll-hit-stickman', 'https://1games.io/ragdoll-hit-stickman')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-      
-    <div class="game-box">
-      <p>Flappy Bird</p>
-      <button onclick="toggleGame('flappy-bird', this)">Click to Load</button>
-      <div class="iframe-container" id="flappy-bird"></div>
-    </div>
-
-    <div class="game-box">
-      <p>Basketball Stars</p>
-      <button onclick="toggleGame('basketball-stars', this)">Click to Load</button>
-      <div class="iframe-container" id="basketball-stars"></div>
-    </div>
-
-    <!-- Cookie Clicker (1games.io) -->
-<div class="game-box" id="custom-cookie-clicker">
-  <p>Cookie Clicker</p>
-  <button onclick="toggleCustomIframe(this, 'custom-cookie-clicker', 'https://1games.io/cookie-clicker')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-<div class="game-box" id="custom-drift-boss">
-  <p>Drift Boss</p>
-  <button onclick="toggleCustomIframe(this, 'custom-drift-boss', 'https://html5.gamedistribution.com/0a8b51e5eaee42e7b4db83ca00afc92e/?utm_source=spew13.github.io&utm_medium=drift-boss&utm_campaign=block-and-redirect')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-
-    <!-- Eaglercraft Minecraft -->
-    <div class="game-box">
-      <p>Minecraft</p>
-      <button onclick="toggleEagler(false, this)">Click to Load</button>
-      <button onclick="toggleEagler(true, this)">Fullscreen</button>
-      <div class="iframe-container" id="eagler-container"></div>
-    </div>
-  </div>
-
-      <!-- ADD THIS anywhere below your existing games, for example, after your "Drift Boss" block: -->
-
-<div class="game-box" id="custom-ragdoll-box">
-  <p>Ragdoll Playground</p>
-  <button onclick="toggleCustomIframe(this, 'custom-ragdoll-box', 'https://1games.io/ragdoll-playground')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-<!-- Ragdoll Playground™ -->
-
-      <!-- Fireboy & Watergirl: Forest Temple -->
-<div class="game-box" id="custom-fireboy-watergirl">
-  <p>Fireboy & Watergirl</p>
-  <button onclick="toggleCustomIframe(this, 'custom-fireboy-watergirl', 'https://1games.io/fireboy-and-watergirl')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-<!-- Life: The Game -->
-<div class="game-box" id="custom-life-the-game">
-  <p>Life: The Game</p>
-  <button onclick="toggleCustomIframe(this, 'custom-life-the-game', 'https://1games.io/life-the-game')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-<!-- Krunker.io -->
-<div class="game-box" id="custom-krunker">
-  <p>Krunker.io</p>
-  <button onclick="toggleCustomIframe(this, 'custom-krunker', 'https://1games.io/krunker')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-<!-- Basket Random -->
-<div class="game-box" id="custom-basket-random">
-  <p>Basket Random</p>
-  <button onclick="toggleCustomIframe(this, 'custom-basket-random', 'https://1games.io/basket-random')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-<!-- Doge Miner 2 -->
-<div class="game-box" id="custom-doge-miner-2">
-  <p>Doge Miner 2</p>
-  <button onclick="toggleCustomIframe(this, 'custom-doge-miner-2', 'https://1games.io/doge-miner-2')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-      <!-- Stickman Hook -->
-<div class="game-box" id="custom-stickman-hook">
-  <p>Stickman Hook</p>
-  <button onclick="toggleCustomIframe(this, 'custom-stickman-hook', 'https://1games.io/stickman-hook')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-      <!-- Tunnel Rush -->
-<div class="game-box" id="custom-tunnel-rush">
-  <p>Tunnel Rush</p>
-  <button onclick="toggleCustomIframe(this, 'custom-tunnel-rush', 'https://1games.io/tunnel-rush')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-
-      <!-- 1v1.LOL -->
-<div class="game-box" id="custom-1v1lol">
-  <p>1v1.LOL</p>
-  <button onclick="toggleCustomIframe(this, 'custom-1v1lol', 'https://1games.io/1v1-lol')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-      
-<!-- Vectaria.io -->
-<div class="game-box" id="custom-vectaria">
-  <p>Vectaria.io</p>
-  <button onclick="toggleCustomIframe(this, 'custom-vectaria', 'https://1games.io/vectaria')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-      
-<!-- Duck Life -->
-<div class="game-box" id="custom-duck-life">
-  <p>Duck Life</p>
-  <button onclick="toggleCustomIframe(this, 'custom-duck-life', 'https://1games.io/duck-life')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-
-<!-- Getting Over It -->
-<div class="game-box" id="custom-getting-over-it">
-  <p>Getting Over It</p>
-  <button onclick="toggleCustomIframe(this, 'custom-getting-over-it', 'https://1games.io/getting-over-it')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-<!-- Zombie Derby: Pixel Survival -->
-<div class="game-box" id="custom-zombie-derby">
-  <p>Zombie Derby</p>
-  <button onclick="toggleCustomIframe(this, 'custom-zombie-derby', 'https://1games.io/zombie-derby')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-
-  <!-- Crazy Cattle 3D -->
-<div class="game-box" id="grow-a-garden">
-  <p>Grow A Garden</p>
-  <button onclick="toggleCustomIframe(this, 'grow-a-garden', 'https://1games.io/grow-a-garden')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-            
-      <!-- Crazy Cattle 3D -->
-<div class="game-box" id="custom-crazy-cattle">
-  <p>Crazy Cattle 3D</p>
-  <button onclick="toggleCustomIframe(this, 'custom-crazy-cattle', 'https://1games.io/crazy-cattle-3d')">Click to Load</button>
-  <div class="iframe-container"></div>
-</div>
-</div>
-</div>
-       <!-- All Gallery code Start-->
-<!-- Gallery Walk Button -->
-<div id="galleryButtonWrapper" style="text-align: center; margin-top: 30px;">
-  <button onclick="loadGalleryWalk()" style="
-    padding: 14px 28px;
-    background: linear-gradient(90deg, limegreen, #00ff88);
-    border: none;
-    border-radius: 16px;
-    font-size: 1.4em;
-    font-weight: bold;
-    cursor: pointer;
-    color: black;
-    box-shadow: 0 0 20px limegreen;
-    transition: transform 0.2s ease;
-  " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-    Enter Spew13 Gallery Walk
-  </button>
-</div>
-
-<!-- Gallery Walk Section -->
-<div id="galleryWalk" style="margin-top: 40px; text-align: center; padding: 20px;">
-  <h1 style="
-    color: lime;
-    font-size: 3em;
-    text-shadow: 0 0 15px limegreen;
-    margin-bottom: 30px;
-  ">
-    Spew13 Gallery Walk
-  </h1>
-
-  <div style="
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    margin: auto;
-  ">
-    <div class="gallery-card">
-      <img src="https://via.placeholder.com/220x150?text=Gallery+1">
-    </div>
-    <div class="gallery-card">
-      <img src="https://via.placeholder.com/220x150?text=Gallery+2">
-    </div>
-    <div class="gallery-card">
-      <img src="https://via.placeholder.com/220x150?text=Gallery+3">
-    </div>
-  </div>
-
-  <p style="color: #bbb; margin-top: 25px;">🌱 More coming soon...</p>
-</div>
-
-      <style>
-  #galleryWalk {
-    display: none;
-    animation: fadeIn 1s ease forwards;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .gallery-card {
-    background-color: rgba(30, 30, 30, 0.95);
-    border-radius: 20px;
-    box-shadow: 0 0 25px limegreen;
-    overflow: hidden;
-    padding: 12px;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    opacity: 0;
-    transform: translateY(50px);
-    animation: cardPop 0.5s ease forwards;
-  }
-
-  .gallery-card:hover {
-    transform: scale(1.06);
-    box-shadow: 0 0 35px #00ff88;
-  }
-
-  .gallery-card img {
-    width: 100%;
-    border-radius: 12px;
-    display: block;
-  }
-
-  @keyframes cardPop {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Delay cards popping in */
-  .gallery-card:nth-child(1) { animation-delay: 0.2s; }
-  .gallery-card:nth-child(2) { animation-delay: 0.4s; }
-  .gallery-card:nth-child(3) { animation-delay: 0.6s; }
-</style>
-
-</body>
-      <!-- All Gallery code End-->
-      
-  <script>
-    function toggleGame(path, button) {
-      const container = document.getElementById(path);
-      const loaded = container.querySelector('iframe');
-
-      if (loaded) {
-        // Unload game
-        container.innerHTML = '';
-        button.textContent = "Click to Load";
-      } else {
-        // Load game
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://spew45.github.io/game-assets/${path}/`;
-        container.appendChild(iframe);
-        button.textContent = "Click to Unload";
-      }
-    }
-
-    function toggleEagler(fullscreen, button) {
-      const container = document.getElementById('eagler-container');
-      const loaded = container.querySelector('iframe');
-
-      if (loaded && !fullscreen) {
-        container.innerHTML = '';
-        button.textContent = "Click to Load";
-      } else if (loaded && fullscreen) {
-        container.classList.add('fullscreen');
-        container.innerHTML = `
-          <button class="exit-fullscreen" onclick="exitFullscreen()">Exit Fullscreen</button>
-          <iframe src="https://eaglercraft.com/mc/1.8.8/" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
-        `;
-      } else {
-        container.innerHTML = `
-          <iframe src="https://eaglercraft.com/mc/1.8.8/" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
-        `;
-        button.textContent = "Click to Unload";
-        container.classList.remove('fullscreen');
-      }
-    }
-
-    function exitFullscreen() {
-      const container = document.getElementById('eagler-container');
-      container.classList.remove('fullscreen');
+    if (loaded) {
       container.innerHTML = '';
-      // Reset button text for Eaglercraft Load button
-      const loadBtn = container.parentElement.querySelector('button[onclick^="toggleEagler(false"]');
-      if (loadBtn) loadBtn.textContent = "Click to Load";
+      button.textContent = "Click to Load";
+    } else {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://spew45.github.io/game-assets/${path}/`;
+      container.appendChild(iframe);
+      button.textContent = "Click to Unload";
     }
+  }
 
-        function updateClock() {
+  function toggleEagler(fullscreen, button) {
+    const container = document.getElementById('eagler-container');
+    const loaded = container.querySelector('iframe');
+
+    if (loaded && !fullscreen) {
+      container.innerHTML = '';
+      button.textContent = "Click to Load";
+    } else if (loaded && fullscreen) {
+      container.classList.add('fullscreen');
+      container.innerHTML = `
+        <button class="exit-fullscreen" onclick="exitFullscreen()">Exit Fullscreen</button>
+        <iframe src="https://eaglercraft.com/mc/1.8.8/" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
+      `;
+    } else {
+      container.innerHTML = `
+        <iframe src="https://eaglercraft.com/mc/1.8.8/" allowfullscreen sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
+      `;
+      button.textContent = "Click to Unload";
+      container.classList.remove('fullscreen');
+    }
+  }
+
+  function exitFullscreen() {
+    const container = document.getElementById('eagler-container');
+    container.classList.remove('fullscreen');
+    container.innerHTML = '';
+    const loadBtn = container.parentElement.querySelector('button[onclick^="toggleEagler(false"]');
+    if (loadBtn) loadBtn.textContent = "Click to Load";
+  }
+
+  function updateClock() {
     const now = new Date();
     let hours = now.getHours();
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
     const ampm = hours >= 12 ? 'PM' : 'AM';
-   
+
     hours = hours % 12;
-    hours = hours ? hours : 12; // '0' should be '12'
+    hours = hours ? hours : 12;
     const timeString = `${String(hours).padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
-   
+
     document.getElementById('clock').textContent = timeString;
   }
 
   setInterval(updateClock, 1000);
-  updateClock(); // Initial load
+  updateClock();
 
-  // Set load for custom 
   function toggleCustomIframe(button, boxId, url) {
-  const box = document.getElementById(boxId);
-  const iframeContainer = box.querySelector('.iframe-container');
-  const loadedIframe = iframeContainer.querySelector('iframe');
+    const box = document.getElementById(boxId);
+    const iframeContainer = box.querySelector('.iframe-container');
+    const loadedIframe = iframeContainer.querySelector('iframe');
 
-  if (loadedIframe) {
-    // Unload iframe
-    iframeContainer.innerHTML = '';
-    button.textContent = "Click to Load";
-  } else {
-    // Load iframe
-    const iframe = document.createElement('iframe');
-    iframe.src = url;
-    iframe.allowFullscreen = true;
-    iframeContainer.appendChild(iframe);
-    button.textContent = "Click to Unload";
-
-    // Scroll to box smoothly
-    box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (loadedIframe) {
+      iframeContainer.innerHTML = '';
+      button.textContent = "Click to Load";
+    } else {
+      const iframe = document.createElement('iframe');
+      iframe.src = url;
+      iframe.allowFullscreen = true;
+      iframeContainer.appendChild(iframe);
+      button.textContent = "Click to Unload";
+      box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
-}
-  // End custom Button Iframe Loader
-    // Music playlist autoplay
-function startMusic() {
-  const song1 = document.getElementById("song1");
-  const song2 = document.getElementById("song2");
-  const song3 = document.getElementById("song3");
-  const nowPlaying = document.getElementById("nowPlayingBox");
 
-  nowPlaying.textContent = "🎶 Now Playing: Tech House Future";
-  song1.play();
+  // Music playlist with now playing update
+  function startMusic() {
+    const songs = [
+      { id: "song1", name: "Tech House Future" },
+      { id: "song2", name: "Addicted" },
+      { id: "song3", name: "BloodSimple" }
+    ];
 
-  song1.addEventListener("ended", () => {
-    nowPlaying.textContent = "🎶 Now Playing: Song 2";
-    song2.play();
-  });
+    let currentIndex = 0;
+    const nowPlaying = document.getElementById("nowPlayingBox");
 
-  song2.addEventListener("ended", () => {
-    nowPlaying.textContent = "🎶 Now Playing: Song 3";
-    song3.play();
-  });
+    function playSong(index) {
+      if (index >= songs.length) {
+        nowPlaying.textContent = "🎶 Now Playing: Nothing";
+        return;
+      }
+      // Pause all songs
+      songs.forEach(s => {
+        const audio = document.getElementById(s.id);
+        audio.pause();
+        audio.currentTime = 0;
+      });
 
-  song3.addEventListener("ended", () => {
-    nowPlaying.textContent = "🎶 Now Playing: Nothing";
-  });
-}
+      const currentSong = songs[index];
+      const audioElem = document.getElementById(currentSong.id);
+      nowPlaying.textContent = `🎶 Now Playing: ${currentSong.name}`;
+      audioElem.play();
 
-  </script>
-      
+      audioElem.onended = () => {
+        currentIndex++;
+        playSong(currentIndex);
+      };
+    }
+
+    playSong(currentIndex);
+  }
+</script>
+
 <footer style="
   background-color: #1e1e1e;
   color: limegreen;
@@ -588,58 +303,5 @@ function startMusic() {
 ">
   &copy; Green Iguana Studios
 </footer>
-<style>
-.container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* centers all .game-box horizontally */
-  padding: 20px;
-}
-
-.game-box {
-  background: #1f1f1f;
-  border: 2px solid limegreen;
-  border-radius: 12px;
-  margin: 20px auto; /* auto left/right margin to center */
-  padding: 20px;
-  width: 90%;
-  max-width: 800px;
-  box-shadow: 0 0 10px limegreen;
-  position: relative;
-  text-align: center; /* center all text/buttons inside */
-  display: block; /* ensure block-level */
-}
-
-.game-box .iframe-container {
-  margin-top: 20px;
-  width: 100%; /* full width of game-box */
-}
-
-.game-box .iframe-container iframe {
-  width: 100%; /* fill container */
-  height: 600px;
-  border-radius: 12px;
-  border: none;
-  box-shadow: 0 0 10px limegreen;
-  display: block; /* remove inline spacing */
-}
-  #nowPlayingBox {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #1e1e1e;
-  color: limegreen;
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: bold;
-  box-shadow: 0 0 12px limegreen;
-  z-index: 9999;
-  font-family: Arial, sans-serif;
-}
-
-
-</style>
-     
-
+</body>
 </html>
