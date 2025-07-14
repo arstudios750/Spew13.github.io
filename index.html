@@ -135,11 +135,15 @@
   </style>
 </head>
 <body>
-  <audio controls>
+ <!-- Start Music Button and Audio Playlist -->
+<div style="margin-top: 20px;">
+  <button onclick="startMusic()">🎵 Start Music</button>
 
-  <source src=" Tech House Future.mp3" type="audio/mpeg">
+  <audio id="song1" src="Tech House Future.mp3"></audio>
+  <audio id="song2" src="song2.mp3"></audio> <!-- Replace with real song -->
+  <audio id="song3" src="song3.mp3"></audio> <!-- Replace with real song -->
+</div>
 
-</audio>
  
       <!-- Main Spew13 Content -->
   <div id="spew13Main">
@@ -539,7 +543,23 @@
   }
 }
   // End custom Button Iframe Loader
-    
+    // Music playlist autoplay
+function startMusic() {
+  const song1 = document.getElementById("song1");
+  const song2 = document.getElementById("song2");
+  const song3 = document.getElementById("song3");
+
+  song1.play();
+
+  song1.addEventListener("ended", () => {
+    song2.play();
+  });
+
+  song2.addEventListener("ended", () => {
+    song3.play();
+  });
+}
+
   </script>
       
 <footer style="
